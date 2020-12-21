@@ -125,6 +125,7 @@
           CLEAR ALL
         </v-btn>
       </v-row>
+      <v-row :style="{ height: '100px' }" />
     </div>
   </v-app>
 </template>
