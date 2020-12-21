@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <div :class="$vuetify.breakpoint.xsOnly ? 'smallAppStyle' : 'appStyle'">
+    <div
+      class="fadeIn"
+      :class="$vuetify.breakpoint.xsOnly ? 'smallAppStyle' : 'appStyle'"
+    >
       <v-row class="centered">
         <h1
           :style="
@@ -13,7 +16,7 @@
           The <span class="accentColour">Shoppies.</span> 🎬
         </h1>
       </v-row>
-      <v-row class="centered pt-12">
+      <v-row class="centered pt-12 fadeIn">
         <v-autocomplete
           v-model="searchResult"
           :items="items"
@@ -61,7 +64,7 @@
         </v-autocomplete>
       </v-row>
 
-      <v-row class="pt-10">
+      <v-row class="pt-10 slowFade">
         <v-col>
           <h2>🏆 My Nominations</h2>
         </v-col>
@@ -93,7 +96,7 @@
         type="success"
         >Nominations successfully saved!</v-alert
       >
-      <transition-group tag="div" name="list" class="row">
+      <transition-group tag="div" name="list" class="row slowFade">
         <MovieCard
           class="smoothTransition"
           @onDel="handleDelete(nomination.imdbID)"
@@ -111,7 +114,7 @@
           <h3>No Movies currently selected 🤔</h3>
         </v-col>
       </transition-group>
-      <v-row class="pa-0 pt-8">
+      <v-row class="pa-0 pt-8 slowFade">
         <v-btn
           @click="save"
           class="mr-6 submit"
@@ -288,5 +291,32 @@ h3 {
 .clickable:hover {
   opacity: 0.5;
   cursor: pointer;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fadeIn {
+  opacity: 0;
+  animation: fade-in 1s;
+  animation-fill-mode: both;
+}
+.slowFade {
+  opacity: 0;
+  animation-delay: 1s;
+  animation: fade-in 2.5s;
+  animation-fill-mode: both;
 }
 </style>
