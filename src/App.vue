@@ -67,7 +67,8 @@
         </v-col>
       </v-row>
       <v-alert
-        rounded
+        class="clickable"
+        :style="{ borderRadius: '26px' }"
         v-if="maxBanner"
         dismissible
         @click="() => (this.maxBanner = false)"
@@ -75,7 +76,8 @@
         >Maximum of 5 nominations are allowed!</v-alert
       >
       <v-alert
-        rounded
+        class="clickable"
+        :style="{ borderRadius: '26px' }"
         v-if="existBanner"
         dismissible
         @click="() => (this.existBanner = false)"
@@ -83,11 +85,12 @@
         >Nomination has already been added</v-alert
       >
       <v-alert
-        rounded
+        class="clickable"
+        :style="{ borderRadius: '26px' }"
         v-if="submitBanner"
         dismissible
         @click="() => (this.submitBanner = false)"
-        type="info"
+        type="success"
         >Nominations successfully saved!</v-alert
       >
       <transition-group tag="div" name="list" class="row">
@@ -110,6 +113,7 @@
       </transition-group>
       <v-row class="pa-0 pt-8">
         <v-btn
+          @click="save"
           class="mr-6 submit"
           x-large
           rounded
@@ -117,7 +121,7 @@
         >
           SUBMIT
         </v-btn>
-        <v-btn x-large rounded>
+        <v-btn @click="clearAll" x-large rounded>
           CLEAR ALL
         </v-btn>
       </v-row>
@@ -145,7 +149,24 @@ export default {
     maxBanner: false,
     submitBanner: false,
   }),
+  mounted() {
+    if (localStorage.getItem("nominations")) {
+      try {
+        this.nominations = JSON.parse(localStorage.getItem("nominations"));
+      } catch (e) {
+        localStorage.removeItem("nominations");
+      }
+    }
+  },
   methods: {
+    save() {
+      const parsed = JSON.stringify(this.nominations);
+      localStorage.setItem("nominations", parsed);
+      this.submitBanner = true;
+    },
+    clearAll() {
+      this.nominations = [];
+    },
     handleDelete(id) {
       console.log("HANDLE");
       console.log(id);
@@ -227,10 +248,10 @@ h3 {
   color: #969696;
 }
 .appStyle {
-  padding: 10% 20% 0 20%;
+  padding: 5% 20% 0 20%;
 }
 .smallAppStyle {
-  padding: 10% 10% 0 10%;
+  padding: 15% 10% 0 10%;
 }
 
 .centered {
