@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ backgroundImage: 'linear-gradient(white, #d9d5c5)' }">
     <div
       class="fadeIn"
       :class="$vuetify.breakpoint.xsOnly ? 'smallAppStyle' : 'appStyle'"
@@ -42,7 +42,13 @@
           </template>
           <template v-slot:item="{ item }">
             <v-avatar @click="itemSelect(item)" left>
-              <img :src="item.Poster" alt="Movie" />
+              <img
+                :src="
+                  item.Poster !== 'N/A'
+                    ? item.Poster
+                    : 'https://cinemaone.net/images/movie_placeholder.png'
+                "
+              />
             </v-avatar>
 
             <v-list-item-content @click="itemSelect(item)" class="ml-4">
@@ -189,6 +195,9 @@ export default {
       if (isExisting != -1) this.existBanner = true;
 
       if (isExisting == -1 && !isMax) {
+        console.log(item.Poster);
+        if (item.Poster === "N/A")
+          item.Poster = "https://cinemaone.net/images/movie_placeholder.png";
         this.nominations.push(item);
       }
     },
@@ -251,6 +260,7 @@ h3 {
   font-weight: 400;
   color: #969696;
 }
+
 .appStyle {
   padding: 5% 20% 0 20%;
 }
